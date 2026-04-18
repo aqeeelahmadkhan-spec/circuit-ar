@@ -3,44 +3,26 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Circuit AR Trainer</title>
+    <title>Circuit AR Trainer - Bahria FYP</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
     <style>
         body { margin: 0; overflow: hidden; }
         #ui-overlay {
-            position: fixed; top: 0; left: 0;
-            width: 100%; z-index: 999;
-            display: flex; justify-content: space-between;
-            align-items: center; padding: 10px 15px;
-            background: rgba(0,0,0,0.6);
-            box-sizing: border-box;
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 20px; background: rgba(0,0,0,0.8); box-sizing: border-box;
+            border-bottom: 2px solid #00cec9;
         }
-        #ui-overlay h3 { color: #00cec9; margin: 0; font-size: 16px; font-family: sans-serif; }
-        #status { color: white; font-size: 13px; font-family: sans-serif; }
-        #info-panel {
-            position: fixed; bottom: 20px; left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.75);
-            color: white; padding: 12px 20px;
-            border-radius: 10px; font-family: sans-serif;
-            font-size: 14px; text-align: center;
-            z-index: 999; display: none;
-            border: 1px solid #00cec9;
-        }
+        #ui-overlay h3 { color: #00cec9; margin: 0; font-size: 18px; font-family: sans-serif; }
+        #status { color: #ffeaa7; font-size: 14px; font-family: sans-serif; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <!-- Top Bar -->
     <div id="ui-overlay">
-        <h3>⚡ Circuit AR Trainer</h3>
-        <span id="status">🔍 Point at Circuit Diagram</span>
-    </div>
-
-    <!-- Info Panel -->
-    <div id="info-panel" id="info-box">
-        <span id="info-text">Circuit Detected!</span>
+        <h3>⚡ PCB AR Trainer</h3>
+        <span id="status">🔍 Scanning Image...</span>
     </div>
 
     <a-scene
@@ -51,151 +33,46 @@
         device-orientation-permission-ui="enabled: false">
 
         <a-assets>
-            <a-asset-item id="circuit1-model" src="Circuit%201_blender.glb"></a-asset-item>
-            <a-asset-item id="circuit2-model" src="Circuit%202_blender.glb"></a-asset-item>
+            <a-asset-item id="circuit1-model" src="circuit1.glb"></a-asset-item>
+            <a-asset-item id="circuit2-model" src="circuit2.glb"></a-asset-item>
         </a-assets>
 
-        <!-- ======= CIRCUIT 1 — Voltage Measurement (Fig 3.2) ======= -->
         <a-entity mindar-image-target="targetIndex: 0">
+            <a-entity gltf-model="#circuit1-model" position="0 0 0" scale="0.08 0.08 0.08" rotation="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear"></a-entity>
 
-            <!-- 3D Circuit Model -->
-            <a-entity
-                gltf-model="#circuit1-model"
-                position="0 0 0"
-                scale="0.08 0.08 0.08"
-                rotation="0 0 0"
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear">
-            </a-entity>
-
-            <!-- Current Flow Dot -->
-            <a-sphere
-                color="#FFD700"
-                radius="0.03"
-                position="-0.3 0.1 0.05"
-                animation__move="property: position; from: -0.3 0.1 0.05; to: 0.3 0.1 0.05; loop: true; dur: 2000; easing: linear"
-                animation__glow="property: color; from: #FFD700; to: #FF4500; loop: true; dur: 1000; dir: alternate">
+            <a-sphere color="#FFD700" radius="0.03" position="-0.3 0.1 0.05"
+                animation__move="property: position; from: -0.3 0.1 0.05; to: 0.3 0.1 0.05; loop: true; dur: 2000; easing: linear">
             </a-sphere>
 
-            <!-- Label: Battery -->
-            <a-text
-                value="🔋 9V Battery"
-                position="-0.35 0.25 0.05"
-                scale="0.4 0.4 0.4"
-                color="#00cec9"
-                align="center">
-            </a-text>
-
-            <!-- Label: Resistor -->
-            <a-text
-                value="⚡ R1: 10kΩ"
-                position="0 0.25 0.05"
-                scale="0.4 0.4 0.4"
-                color="#fdcb6e"
-                align="center">
-            </a-text>
-
-            <!-- Label: Voltmeter -->
-            <a-text
-                value="📊 Voltmeter"
-                position="0.35 0.25 0.05"
-                scale="0.4 0.4 0.4"
-                color="#55efc4"
-                align="center">
-            </a-text>
-
-            <!-- Circuit Title -->
-            <a-text
-                value="Figure 3.2: Voltage Measurement"
-                position="0 -0.35 0.05"
-                scale="0.5 0.5 0.5"
-                color="white"
-                align="center">
-            </a-text>
-
+            <a-text value="9V Battery" position="-0.35 0.25 0.05" scale="0.4 0.4 0.4" color="#00cec9" align="center"></a-text>
+            <a-text value="Voltmeter" position="0.35 0.25 0.05" scale="0.4 0.4 0.4" color="#55efc4" align="center"></a-text>
+            <a-text value="⚡ R1: 10kΩ" position="0 0.25 0.05" scale="0.4 0.4 0.4" color="#fdcb6e" align="center"></a-text>
+            <a-text value="Figure 3.2: Voltage Measurement" position="0 -0.35 0.05" scale="0.5 0.5 0.5" color="white" align="center"></a-text>
         </a-entity>
 
-        <!-- ======= CIRCUIT 2 — Current Measurement (Fig 3.3) ======= -->
         <a-entity mindar-image-target="targetIndex: 1">
+            <a-entity gltf-model="#circuit2-model" position="0 0 0" scale="0.08 0.08 0.08" rotation="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear"></a-entity>
 
-            <!-- 3D Circuit Model -->
-            <a-entity
-                gltf-model="#circuit2-model"
-                position="0 0 0"
-                scale="0.08 0.08 0.08"
-                rotation="0 0 0"
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear">
-            </a-entity>
-
-            <!-- Current Flow Dot -->
-            <a-sphere
-                color="#FF4500"
-                radius="0.03"
-                position="-0.3 0.1 0.05"
-                animation__move="property: position; from: -0.3 0.1 0.05; to: 0.3 0.1 0.05; loop: true; dur: 1500; easing: linear"
-                animation__glow="property: color; from: #FF4500; to: #FFD700; loop: true; dur: 750; dir: alternate">
+            <a-sphere color="#FF4500" radius="0.03" position="-0.3 0.1 0.05"
+                animation__move="property: position; from: -0.3 0.1 0.05; to: 0.3 0.1 0.05; loop: true; dur: 1500; easing: linear">
             </a-sphere>
 
-            <!-- Label: Battery -->
-            <a-text
-                value="🔋 Vin: 10V"
-                position="-0.35 0.25 0.05"
-                scale="0.4 0.4 0.4"
-                color="#00cec9"
-                align="center">
-            </a-text>
-
-            <!-- Label: Resistor -->
-            <a-text
-                value="⚡ R1: 10kΩ"
-                position="0 0.25 0.05"
-                scale="0.4 0.4 0.4"
-                color="#fdcb6e"
-                align="center">
-            </a-text>
-
-            <!-- Label: Ammeter -->
-            <a-text
-                value="🔌 Ammeter"
-                position="0.35 0.25 0.05"
-                scale="0.4 0.4 0.4"
-                color="#ff7675"
-                align="center">
-            </a-text>
-
-            <!-- Circuit Title -->
-            <a-text
-                value="Figure 3.3: Current Measurement"
-                position="0 -0.35 0.05"
-                scale="0.5 0.5 0.5"
-                color="white"
-                align="center">
-            </a-text>
-
+            <a-text value="Ammeter" position="0.35 0.25 0.05" scale="0.4 0.4 0.4" color="#ff7675" align="center"></a-text>
+            <a-text value="🔋 Vin: 10V" position="-0.35 0.25 0.05" scale="0.4 0.4 0.4" color="#00cec9" align="center"></a-text>
+            <a-text value="⚡ R1: 10kΩ" position="0 0.25 0.05" scale="0.4 0.4 0.4" color="#fdcb6e" align="center"></a-text>
+            <a-text value="Figure 3.3: Current Measurement" position="0 -0.35 0.05" scale="0.5 0.5 0.5" color="white" align="center"></a-text>
         </a-entity>
 
         <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
     </a-scene>
 
     <script>
-        // Status update
         const sceneEl = document.querySelector('a-scene');
         const status = document.getElementById('status');
 
-        sceneEl.addEventListener('arReady', () => {
-            status.textContent = '✅ AR Ready — Scan Circuit!';
-        });
-
-        sceneEl.addEventListener('targetFound', () => {
-            status.textContent = '🎯 Circuit Detected!';
-            status.style.color = '#00cec9';
-        });
-
-        sceneEl.addEventListener('targetLost', () => {
-            status.textContent = '🔍 Point at Circuit Diagram';
-            status.style.color = 'white';
-        });
+        sceneEl.addEventListener('arReady', () => { status.textContent = '✅ AR Ready — Point at Lab Journal!'; });
+        sceneEl.addEventListener('targetFound', () => { status.textContent = '🎯 Circuit Detected!'; status.style.color = '#00cec9'; });
+        sceneEl.addEventListener('targetLost', () => { status.textContent = '🔍 Scanning Image...'; status.style.color = '#ffeaa7'; });
     </script>
-
 </body>
 </html>
